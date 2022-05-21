@@ -195,6 +195,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DialogDeviceSelect.h" />
     <ClInclude Include="DialogPandisNIDS.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="PandisNIDS.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="WinProtocols.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DialogDeviceSelect.cpp" />
     <ClCompile Include="DialogPandisNIDS.cpp" />
     <ClCompile Include="PandisNIDS.cpp" />
     <ClCompile Include="pch.cpp">

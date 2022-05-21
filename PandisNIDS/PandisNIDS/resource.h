@@ -16,13 +16,28 @@
 #define IDC_BUTTON_STOP                 1002
 #define IDC_BUTTON_PAUSE                1003
 #define IDC_LIST1                       1004
+#define IDC_LIST_RULE_LIST              1004
 #define IDC_EDIT_SELECT_TRANSPARENC     1005
 #define IDC_SPIN1                       1006
+#define IDC_SPIN_RULE_LIST_CHANGE_NUMBER 1006
 #define IDC_COMBO_RULE_PROTOCOL_SEL     1008
 #define IDC_IPADDRESS1                  1009
+#define IDC_IPADDRESS_RULE_SOURCE_IP    1009
 #define IDC_EDIT_RULE_SOURCE_PORT       1010
 #define IDC_CHECK1                      1011
 #define IDC_CHECK_RULE_SOURCE_ANY_IP    1011
+#define IDC_CHECK_RULE_SOURCE_ANY_PORT  1012
+#define IDC_IPADDRESS_RULE_DESTINATION_IP 1013
+#define IDC_EDIT_RULE_DESTINATION_PORT  1014
+#define IDC_CHECK_RULE_DESTINATION_ANY_IP 1015
+#define IDC_CHECK_RULE_DESTINATION_ANY_PORT 1017
+#define IDC_EDIT_RULE_ANALYZE_VALUE     1018
+#define IDC_BUTTON_RULE_APPLY           1019
+#define IDC_BUTTON_RULE_DELETE          1020
+#define IDC_BUTTON_RULE_IMPORT          1021
+#define IDC_BUTTON4                     1022
+#define IDC_BUTTON_RULE_EXPORT          1022
+#define IDC_LIST_DEVICE                 1023
 
 // Next default values for new objects
 // 
@@ -30,7 +45,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
