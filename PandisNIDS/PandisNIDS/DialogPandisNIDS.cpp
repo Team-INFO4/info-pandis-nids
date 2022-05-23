@@ -185,10 +185,11 @@ void CDialogPandisNIDS::OnBnClickedButtonStart()
 UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 {
 	CDialogPandisNIDS* PThis = (CDialogPandisNIDS*)lpParam;
+	bool bIsError = false;
 
 	PThis->m_CS.Lock();
 
-	if ((PThis->m_hPcap = pcap_open_live(
+	if (!bIsError && (PThis->m_hPcap = pcap_open_live(
 		(CStringA)PThis->m_DlgDevSel.m_strDeviceID,
 		65536,
 		1,
@@ -196,22 +197,32 @@ UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 		PThis->m_lpszErrbuf)) == NULL)
 	{
 		AfxMessageBox(_T("디바이스를 열 수 없습니다."));
-		return -1;
+		bIsError = true;
 	}
 
-	if ((pcap_compile(PThis->m_hPcap,
+	if (!bIsError && (pcap_compile(PThis->m_hPcap,
 		&PThis->m_fcode,
 		(CStringA)PThis->m_DlgRuleSet.m_strFilterRule,
 		1,
 		PCAP_NETMASK_UNKNOWN)) < 0)
 	{
 		AfxMessageBox(_T("규칙을 설정하는 과정에서 오류가 발생했습니다."));
-		return -1;
+		bIsError = true;
 	}
 
-	if ((pcap_setfilter(PThis->m_hPcap, &PThis->m_fcode)) < 0)
+	if (!bIsError && (pcap_setfilter(PThis->m_hPcap, &PThis->m_fcode)) < 0)
 	{
 		AfxMessageBox(_T("규칙을 적용하는 과정에서 오류가 발생했습니다."));
+		bIsError = true;
+	}
+
+	if (bIsError)
+	{
+		PThis->m_ThreadStatus = THREAD_STOP;
+		PThis->m_pThread = NULL;
+		PThis->m_CS.Unlock();
+		delete PThis->m_DlgDevSel;
+		delete PThis->m_DlgRuleSet;
 		return -1;
 	}
 
@@ -222,6 +233,8 @@ UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 	PThis->m_pThread = NULL;
 
 	PThis->m_CS.Unlock();
+	delete PThis->m_DlgDevSel;
+	delete PThis->m_DlgRuleSet;
 	return 0;
 }
 
@@ -232,7 +245,7 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 	CString strResult;
 
 	hdr_t pkth = PacketAnalyzing(pkt_data);
-	PrintPacketData(pkth, strResult); // TODO
+	PrintPacketData(pkth, strResult);
 
 	len = TThis->m_ctrlLoggingOut.GetWindowTextLength();
 	TThis->m_ctrlLoggingOut.SetSel(len, len);

@@ -117,7 +117,7 @@ void CDialogRuleSet::OnBnClickedCheckRuleDestinationAnyPort()
 		GetDlgItem(IDC_EDIT_RULE_DESTINATION_PORT)->EnableWindow(TRUE);
 }
 
-void CDialogRuleSet::OnBnClickedButtonRuleApply()
+void CDialogRuleSet::OnBnClickedButtonRuleApply() // TODO: 복합 규칙 설정 버그
 {
 	UpdateData(TRUE);
 
@@ -195,7 +195,7 @@ void CDialogRuleSet::OnBnClickedButtonRuleDelete()
 }
 
 
-void CDialogRuleSet::OnBnClickedOk()
+void CDialogRuleSet::OnBnClickedOk() // TODO: 감지할 데이터 구분자(->) 뒷부분 전부 제거
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString strTemp;
