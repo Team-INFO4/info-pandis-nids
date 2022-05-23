@@ -39,13 +39,9 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_EDIT_DISPLAY, m_ctrlLoggingOut);
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON_START, &CDialogPandisNIDS::OnBnClickedButtonStart)
-	ON_BN_CLICKED(IDC_BUTTON_STOP, &CDialogPandisNIDS::OnBnClickedButtonStop)
-	ON_BN_CLICKED(IDC_BUTTON_PAUSE, &CDialogPandisNIDS::OnBnClickedButtonPause)
 END_MESSAGE_MAP()
 
 
@@ -64,12 +60,16 @@ CDialogPandisNIDS::CDialogPandisNIDS(CWnd* pParent /*=nullptr*/)
 void CDialogPandisNIDS::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT_DISPLAY, m_ctrlLoggingOut);
 }
 
 BEGIN_MESSAGE_MAP(CDialogPandisNIDS, CDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON_START, &CDialogPandisNIDS::OnBnClickedButtonStart)
+	ON_BN_CLICKED(IDC_BUTTON_STOP, &CDialogPandisNIDS::OnBnClickedButtonStop)
+	ON_BN_CLICKED(IDC_BUTTON_PAUSE, &CDialogPandisNIDS::OnBnClickedButtonPause)
 END_MESSAGE_MAP()
 
 

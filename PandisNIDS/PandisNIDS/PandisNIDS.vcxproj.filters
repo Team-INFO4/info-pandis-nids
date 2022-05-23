@@ -39,6 +39,9 @@
     <ClInclude Include="DialogDeviceSelect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="DialogRuleSet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PandisNIDS.cpp">
@@ -54,6 +57,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="DialogDeviceSelect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogRuleSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -16,7 +16,7 @@ public:
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_PANDISNIDS_DIALOG };
+	enum { IDD = IDD_PANDIS_PANDISNIDS };
 #endif
 
 	protected:
