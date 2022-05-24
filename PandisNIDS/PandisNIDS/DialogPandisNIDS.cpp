@@ -250,25 +250,23 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 
 	len = TThis->m_ctrlLoggingOut.GetWindowTextLength();
 	TThis->m_ctrlLoggingOut.SetSel(len, len);
-
-	if (TThis->m_ThreadStatus == THREAD_STOP)
-	{
-		TThis->m_ctrlLoggingOut.ReplaceSel(_T("[TERMINATED]\r\n"));
-		pcap_breakloop(TThis->m_hPcap);
-	}
+	TThis->m_ctrlLoggingOut.ReplaceSel(strResult);
 
 	if (TThis->m_ThreadStatus == THREAD_PAUSE)
 	{
 		TThis->m_ctrlLoggingOut.ReplaceSel(_T("[PAUSE]\r\n"));
 		while (TThis->m_ThreadStatus == THREAD_PAUSE);
 	}
-
-	TThis->m_ctrlLoggingOut.ReplaceSel(strResult);
 }
 
 void CDialogPandisNIDS::OnBnClickedButtonStop()
 {
+	if (m_ThreadStatus == THREAD_STOP)
+		return;
+
 	m_ThreadStatus = THREAD_STOP;
+	m_ctrlLoggingOut.ReplaceSel(_T("[TERMINATED]\r\n"));
+	pcap_breakloop(m_hPcap);
 }
 
 void CDialogPandisNIDS::OnBnClickedButtonPause()

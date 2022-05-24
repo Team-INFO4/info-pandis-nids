@@ -171,17 +171,21 @@ void CDialogRuleSet::OnBnClickedButtonRuleDelete()
 }
 
 
-void CDialogRuleSet::OnBnClickedOk() // TODO: 감지할 데이터 구분자(->) 뒷부분 전부 제거
+void CDialogRuleSet::OnBnClickedOk()
 {
 	CString strTemp;
+	CString strRule;
 
 	for (int i = 0, len = m_ctrlRuleList.GetCount(); i < len; i++)
 	{
 		m_ctrlRuleList.GetText(i, strTemp);
-		m_strFilterRule += strTemp;
+
+		int nSeparatoridx = strTemp.Find(_T("->"));
+		strRule = strTemp.Mid(0, nSeparatoridx);
+		m_strFilterRule += strRule;
 
 		if (i + 1 == len)
-			continue;
+			break;
 
 		m_strFilterRule += " or ";
 	}
