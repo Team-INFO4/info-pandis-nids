@@ -139,33 +139,16 @@ void CDialogRuleSet::OnBnClickedButtonRuleApply() // TODO: 복합 규칙 설정 
 	strRule += strProtocol.MakeLower();
 
 	if (strSrcIp != "0.0.0.0" && !m_ctrlAnySrcIPCheckBox.GetCheck())
-	{
-		strRule += _T(" src host ") + strSrcIp;
-		bCheckActive = true;
-	}
+		strRule += _T(" and src host ") + strSrcIp;
 
 	if (strSrcPort != '0' && !m_ctrlAnySrcPortCheckBox.GetCheck())
-	{
-		if (bCheckActive)
-			strRule += _T(" and");
-		strRule += _T(" src port ") + strSrcPort;
-		bCheckActive = true;
-	}
+		strRule += _T(" and src port ") + strSrcPort;
 
 	if (strDstIp != "0.0.0.0" && !m_ctrlAnyDstIPCheckBox.GetCheck())
-	{
-		if (bCheckActive)
-			strRule += _T(" and");
-		strRule += _T(" dst host ") + strDstIp;
-		bCheckActive = true;
-	}
+		strRule += _T(" and dst host ") + strDstIp;
 
 	if (strDstPort != '0' && !m_ctrlAnyDstPortCheckBox.GetCheck())
-	{
-		if (bCheckActive)
-			strRule += _T(" and");
-		strRule += _T(" dst port ") + strDstPort;
-	}
+		strRule += _T(" and dst port ") + strDstPort;
 
 	if (!m_strAnalyzeData.IsEmpty())
 		strRule += _T("->") + m_strAnalyzeData;

@@ -164,10 +164,13 @@ void CDialogPandisNIDS::OnBnClickedButtonStart()
 		return;
 	}
 
-	if (m_DlgDevSel.DoModal() == IDCANCEL)
+	m_DlgDevSel = new CDialogDeviceSelect;
+	m_DlgRuleSet = new CDialogRuleSet;
+
+	if (m_DlgDevSel->DoModal() == IDCANCEL)
 		return;
 
-	if (m_DlgRuleSet.DoModal() == IDCANCEL)
+	if (m_DlgRuleSet->DoModal() == IDCANCEL)
 		return;
 
 	m_ctrlLoggingOut.SetWindowText(_T(""));
@@ -190,7 +193,7 @@ UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 	PThis->m_CS.Lock();
 
 	if (!bIsError && (PThis->m_hPcap = pcap_open_live(
-		(CStringA)PThis->m_DlgDevSel.m_strDeviceID,
+		(CStringA)PThis->m_DlgDevSel->m_strDeviceID,
 		65536,
 		1,
 		1000,
@@ -202,7 +205,7 @@ UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 
 	if (!bIsError && (pcap_compile(PThis->m_hPcap,
 		&PThis->m_fcode,
-		(CStringA)PThis->m_DlgRuleSet.m_strFilterRule,
+		(CStringA)PThis->m_DlgRuleSet->m_strFilterRule,
 		1,
 		PCAP_NETMASK_UNKNOWN)) < 0)
 	{
