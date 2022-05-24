@@ -228,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\PandisNIDS.ico" />
+    <Image Include="res\test.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,11 +8,12 @@
 #define IDD_PANDISNIDS_DIALOG           102
 #define IDD_DIALOG_PANDISNIDS           102
 #define IDP_SOCKETS_INIT_FAILED         103
-#define IDR_MAINFRAME                   128
 #define IDD_DIALOG_DEVICE_SELECT        131
 #define IDD_DIALOG_RULE_SET             133
 #define IDD_DIALOG1                     136
 #define IDD_DIALOG_FIREWALL             136
+#define IDI_ICON1                       139
+#define IDI_ICON_PANDIS                 139
 #define IDC_EDIT_DISPLAY                1000
 #define IDC_BUTTON_START                1001
 #define IDC_BUTTON_STOP                 1002
@@ -45,7 +46,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        138
+#define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101

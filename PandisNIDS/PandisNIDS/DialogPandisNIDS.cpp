@@ -54,7 +54,7 @@ CDialogPandisNIDS::CDialogPandisNIDS(CWnd* pParent /*=nullptr*/)
 	, m_CS()
 	, m_ThreadStatus(THREAD_STOP)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_ICON_PANDIS);
 }
 
 void CDialogPandisNIDS::DoDataExchange(CDataExchange* pDX)
