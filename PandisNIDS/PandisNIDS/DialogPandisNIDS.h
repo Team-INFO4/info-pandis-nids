@@ -25,9 +25,9 @@ public:
 // 구현입니다.
 public:
 	// 네트워크 인터페이스 디바이스 지정
-	CDialogDeviceSelect m_DlgDevSel;
+	CDialogDeviceSelect *m_DlgDevSel;
 	// 패킷 탐지 규칙 지정
-	CDialogRuleSet m_DlgRuleSet;
+	CDialogRuleSet *m_DlgRuleSet;
 	// 메인화면 출력 컨트롤
 	CEdit m_ctrlLoggingOut;
 public:
