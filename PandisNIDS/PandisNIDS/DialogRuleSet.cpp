@@ -64,7 +64,6 @@ BOOL CDialogRuleSet::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 	m_ctrlProtocolComboBox.AddString(_T("TCP"));
 	m_ctrlProtocolComboBox.AddString(_T("UDP"));
 	m_ctrlProtocolComboBox.AddString(_T("ICMP"));
@@ -80,7 +79,6 @@ BOOL CDialogRuleSet::OnInitDialog()
 
 void CDialogRuleSet::OnBnClickedCheckRuleSourceAnyIp()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (m_ctrlAnySrcIPCheckBox.GetCheck())
 		m_ctrlSourceIP.EnableWindow(FALSE);
 	else
@@ -90,7 +88,6 @@ void CDialogRuleSet::OnBnClickedCheckRuleSourceAnyIp()
 
 void CDialogRuleSet::OnBnClickedCheckRuleSourceAnyPort()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (m_ctrlAnySrcPortCheckBox.GetCheck())
 		GetDlgItem(IDC_EDIT_RULE_SOURCE_PORT)->EnableWindow(FALSE);
 	else
@@ -100,7 +97,6 @@ void CDialogRuleSet::OnBnClickedCheckRuleSourceAnyPort()
 
 void CDialogRuleSet::OnBnClickedCheckRuleDestinationAnyIp()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (m_ctrlAnyDstIPCheckBox.GetCheck())
 		m_ctrlDestinationIP.EnableWindow(FALSE);
 	else
@@ -110,21 +106,19 @@ void CDialogRuleSet::OnBnClickedCheckRuleDestinationAnyIp()
 
 void CDialogRuleSet::OnBnClickedCheckRuleDestinationAnyPort()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (m_ctrlAnyDstPortCheckBox.GetCheck())
 		GetDlgItem(IDC_EDIT_RULE_DESTINATION_PORT)->EnableWindow(FALSE);
 	else
 		GetDlgItem(IDC_EDIT_RULE_DESTINATION_PORT)->EnableWindow(TRUE);
 }
 
-void CDialogRuleSet::OnBnClickedButtonRuleApply() // TODO: 복합 규칙 설정 버그
+void CDialogRuleSet::OnBnClickedButtonRuleApply()
 {
 	UpdateData(TRUE);
 
 	if (m_ctrlProtocolComboBox.GetCurSel() == LB_ERR)
 		return;
 
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString strRule;
 	CString strProtocol, strSrcIp, strSrcPort, strDstIp, strDstPort;
 	bool bCheckActive = false;
@@ -164,7 +158,6 @@ void CDialogRuleSet::OnBnClickedButtonRuleApply() // TODO: 복합 규칙 설정 
 
 void CDialogRuleSet::OnBnClickedButtonRuleDelete()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	int nSelectIndex;
 	if ((nSelectIndex = m_ctrlRuleList.GetCurSel()) == LB_ERR)
 		return;
@@ -180,7 +173,6 @@ void CDialogRuleSet::OnBnClickedButtonRuleDelete()
 
 void CDialogRuleSet::OnBnClickedOk() // TODO: 감지할 데이터 구분자(->) 뒷부분 전부 제거
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CString strTemp;
 
 	for (int i = 0, len = m_ctrlRuleList.GetCount(); i < len; i++)
@@ -200,7 +192,6 @@ void CDialogRuleSet::OnBnClickedOk() // TODO: 감지할 데이터 구분자(->) 
 
 void CDialogRuleSet::OnBnClickedButtonRuleImport()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CFileDialog dlg(true, _T("*.ini"), NULL, OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT, _T("INI Files(*.ini)|*.ini|"), NULL);
 
 	if (dlg.DoModal() != IDOK)
@@ -251,7 +242,6 @@ void CDialogRuleSet::OnBnClickedButtonRuleImport()
 
 void CDialogRuleSet::OnBnClickedButtonRuleExport()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CFileDialog dlg(false, _T("*.ini"), NULL, OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT, _T("INI Files(*.ini)|*.ini|"), NULL);
 
 	if (dlg.DoModal() != IDOK)
@@ -285,7 +275,7 @@ void CDialogRuleSet::OnBnClickedButtonRuleExport()
 void CDialogRuleSet::OnDeltaposSpinRuleListChangeNumber(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	
 	UpdateData(TRUE);
 	int nSel = m_ctrlRuleList.GetCurSel();
 	int nCount = m_ctrlRuleList.GetCount();
@@ -328,7 +318,7 @@ void CDialogRuleSet::OnDeltaposSpinRuleListChangeNumber(NMHDR* pNMHDR, LRESULT* 
 
 void CDialogRuleSet::OnLbnSelchangeListRuleList()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	
 	int nSel = m_ctrlRuleList.GetCurSel();
 	if (nSel != LB_ERR)
 	{

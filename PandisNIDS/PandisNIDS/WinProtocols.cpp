@@ -53,7 +53,7 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data)
 	return headers;
 }
 
-int PrintPacketData(hdr_t packet_headers, CString& strPrintString)
+int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : 출력 완성
 {
 	strPrintString = "/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-/\r\n";
 
