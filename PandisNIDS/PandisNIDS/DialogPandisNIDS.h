@@ -29,7 +29,7 @@ public:
 	// 패킷 탐지 규칙 지정
 	CDialogRuleSet *m_DlgRuleSet;
 	// 메인화면 출력 컨트롤
-	CEdit m_ctrlLoggingOut;
+	CEdit m_ctrlLoggingOut; // TODO: 다른 컨트롤로 변경
 public:
 	// 패킷 캡처 핸들
 	pcap_t* m_hPcap;
