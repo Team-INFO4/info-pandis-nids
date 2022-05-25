@@ -181,8 +181,13 @@ void CDialogRuleSet::OnBnClickedOk()
 		m_ctrlRuleList.GetText(i, strTemp);
 
 		int nSeparatoridx = strTemp.Find(_T("->"));
-		strRule = strTemp.Mid(0, nSeparatoridx);
-		m_strFilterRule += strRule;
+		if (nSeparatoridx > -1)
+		{
+			strRule = strTemp.Mid(0, nSeparatoridx);
+			m_strFilterRule += strRule;
+		}
+		else
+			m_strFilterRule += strTemp;
 
 		if (i + 1 == len)
 			break;
