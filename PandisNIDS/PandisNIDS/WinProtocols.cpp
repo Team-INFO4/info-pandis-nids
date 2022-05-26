@@ -149,17 +149,29 @@ int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : Ãâ·
 
 	if (packet_headers.tcph)
 	{
-
+		strPrintString.AppendFormat(_T("tcp Protocal \r\n"));
+		strPrintString.AppendFormat(_T("Source Port:   %5d \r\n"),
+			packet_headers.tcph->tcp_src_port);
+		strPrintString.AppendFormat(_T("Destination Port:   %5d \r\n"),
+			packet_headers.tcph->tcp_dst_port);
 	}
 
 	if (packet_headers.udph)
 	{
-
+		strPrintString.AppendFormat(_T("udp Protocal \r\n"));
+		strPrintString.AppendFormat(_T("Source Port:   %5d \r\n"),
+			packet_headers.udph->udp_src_port);
+		strPrintString.AppendFormat(_T("Destination Port:   %5d \r\n"),
+			packet_headers.udph->udp_dst_port);
 	}
 
 	if (packet_headers.icmph)
 	{
-
+		strPrintString.AppendFormat(_T("icmp Protocal \r\n"));
+		strPrintString.AppendFormat(_T("icmp type:   0x%04X \r\n"),
+			ntohs(packet_headers.icmph->icmp_type));
+		strPrintString.AppendFormat(_T("icmp code:   0x%04X \r\n"),
+			ntohs(packet_headers.icmph->icmp_code));
 	}
 
 	strPrintString += "/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-/\r\n";
