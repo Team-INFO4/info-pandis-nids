@@ -67,6 +67,7 @@ BOOL CDialogRuleSet::OnInitDialog()
 	m_ctrlProtocolComboBox.AddString(_T("TCP"));
 	m_ctrlProtocolComboBox.AddString(_T("UDP"));
 	m_ctrlProtocolComboBox.AddString(_T("ICMP"));
+	m_ctrlProtocolComboBox.AddString(_T("ICMP6"));
 	m_ctrlProtocolComboBox.AddString(_T("ARP"));
 	m_ctrlProtocolComboBox.SetCurSel(0);
 
