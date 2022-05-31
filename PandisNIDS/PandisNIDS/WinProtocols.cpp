@@ -49,7 +49,8 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data)
 		headers.arph = (arph_t*)(packet_data + sizeof(eth_t));
 		break;
 	}
-
+	// 1. 패킷에 맞는 헤더 길이 구하고
+	// 2. 헤더 + 1부터 (데이터) 사용자 문자열 검색
 	return headers;
 }
 
