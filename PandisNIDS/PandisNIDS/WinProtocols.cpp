@@ -19,12 +19,15 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data)
 		{
 		case 6:		// TCP
 			headers.tcph = (tcph_t*)(packet_data + sizeof(eth_t) + headers.ip4h->ip4_hdr_len * 4);
+			headers.type = IPV4_TCP;
 			break;
 		case 17:	// UDP
 			headers.udph = (udph_t*)(packet_data + sizeof(eth_t) + headers.ip4h->ip4_hdr_len * 4);
+			headers.type = IPV4_UDP;
 			break;
 		case 1:		// ICMP
 			headers.icmph = (icmph_t*)(packet_data + sizeof(eth_t) + headers.ip4h->ip4_hdr_len * 4);
+			headers.type = IPV4_TCP_ICMP;
 			break;
 		}
 		break;
@@ -35,22 +38,25 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data)
 		{
 		case 6:		// TCP
 			headers.tcph = (tcph_t*)(packet_data + sizeof(eth_t) + sizeof(ipv6h_t));
+			headers.type = IPV6_TCP;
 			break;
 		case 17:	// UDP
 			headers.udph = (udph_t*)(packet_data + sizeof(eth_t) + sizeof(ipv6h_t));
+			headers.type = IPV6_UDP;
 			break;
 		case 58:	// ICMPv6
 			headers.icmph = (icmph_t*)(packet_data + sizeof(eth_t) + sizeof(ipv6h_t));
+			headers.type = IPV6_TCP_ICMP;
 			break;
 		}
 		break;
 
 	case 0x0806:
 		headers.arph = (arph_t*)(packet_data + sizeof(eth_t));
+		headers.type = ARP;
 		break;
 	}
-	// 1. 패킷에 맞는 헤더 길이 구하고
-	// 2. 헤더 + 1부터 (데이터) 사용자 문자열 검색
+
 	return headers;
 }
 

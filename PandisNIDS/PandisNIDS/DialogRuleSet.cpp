@@ -122,7 +122,6 @@ void CDialogRuleSet::OnBnClickedButtonRuleApply()
 
 	CString strRule;
 	CString strProtocol, strSrcIp, strSrcPort, strDstIp, strDstPort;
-	bool bCheckActive = false;
 
 	m_ctrlProtocolComboBox.GetLBText(m_ctrlProtocolComboBox.GetCurSel(), strProtocol);
 

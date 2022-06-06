@@ -65,9 +65,6 @@
     <ClCompile Include="DialogRuleSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="DialogFirewall.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PandisNIDS.rc">

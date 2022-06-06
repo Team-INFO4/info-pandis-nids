@@ -6,6 +6,17 @@ typedef unsigned int			bit32_t;
 typedef unsigned long long int	bit64_t;
 
 /*
+*	패킷 타입 매크로
+*/
+#define ARP				0
+#define IPV4_TCP		1
+#define IPV4_UDP		2
+#define IPV4_TCP_ICMP	3
+#define IPV6_TCP		4
+#define IPV6_UDP		5
+#define IPV6_TCP_ICMP	6
+
+/*
 *	이더넷 헤더
 */
 
@@ -114,13 +125,14 @@ typedef struct udp_headers {
 */
 
 typedef struct p_headers {
-	const eth_t*	eth;
-	const ipv4h_t*	ip4h;
-	const ipv6h_t*	ip6h;
-	const arph_t*	arph;
-	const icmph_t*	icmph;
-	const tcph_t*	tcph;
-	const udph_t*	udph;
+	const eth_t* eth;
+	const ipv4h_t* ip4h;
+	const ipv6h_t* ip6h;
+	const arph_t* arph;
+	const icmph_t* icmph;
+	const tcph_t* tcph;
+	const udph_t* udph;
+	UINT			type;
 }hdr_t;
 
 hdr_t PacketAnalyzing(const bit8_t* packet_data);
