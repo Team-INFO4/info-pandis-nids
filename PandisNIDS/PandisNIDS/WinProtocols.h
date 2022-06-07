@@ -137,3 +137,4 @@ typedef struct p_headers {
 
 hdr_t PacketAnalyzing(const bit8_t* packet_data);
 int PrintPacketData(hdr_t packet_headers, CString& strPrintString);
+int FindStringPacketData(const bit8_t* packet_data, std::vector<CString>find_strings);
