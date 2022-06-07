@@ -268,7 +268,7 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 	strIndex.Format(_T("%u"), TThis->m_index + 1);
 
 	hdr_t pkth = PacketAnalyzing(pkt_data);
-
+	// TODO: 문자열 탐지 추가
 	TThis->m_ctrlListLogText.InsertItem(TThis->m_index, strIndex);
 
 	switch (pkth.type)
