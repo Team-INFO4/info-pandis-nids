@@ -263,136 +263,22 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 {
 	CDialogPandisNIDS* TThis = (CDialogPandisNIDS*)param;
 	pcap_dump((u_char*)TThis->m_dumpfile, header, pkt_data);
-
-	CString strResult, strIndex, strSrc, strDst, strInfo;
-	strIndex.Format(_T("%u"), TThis->m_index + 1);
-
+	CString strIndex, strProtocol, strSrc, strDst, strInfo;
+	
 	hdr_t pkth = PacketAnalyzing(pkt_data);
 
+	strIndex.Format(_T("%u"), TThis->m_index + 1);
+	ProtocolAnalyzing(pkth.type, strProtocol);
+	AddressAnalyzing(pkth, strSrc, strDst);
+	InfoAnalzing(pkth, header->len, strInfo);
+
 	TThis->m_ctrlListLogText.InsertItem(TThis->m_index, strIndex);
-
-	switch (pkth.type)
-	{
-	case ARP:
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 1, LVIF_TEXT, _T("ARP"), NULL, NULL, NULL, NULL);
-		break;
-
-	case IPV4_TCP:
-	case IPV6_TCP:
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 1, LVIF_TEXT, _T("TCP"), NULL, NULL, NULL, NULL);
-		break;
-
-	case IPV4_UDP:
-	case IPV6_UDP:
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 1, LVIF_TEXT, _T("UDP"), NULL, NULL, NULL, NULL);
-		break;
-
-	case IPV4_TCP_ICMP:
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 1, LVIF_TEXT, _T("ICMP"), NULL, NULL, NULL, NULL);
-		break;
-
-	case IPV6_TCP_ICMP:
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 1, LVIF_TEXT, _T("ICMPv6"), NULL, NULL, NULL, NULL);
-		break;
-	}
-
-	switch (pkth.type)
-	{
-	case ARP:
-		strSrc.Format(_T("%02X:%02X:%02X:%02X:%02X:%02X"),
-			pkth.eth->eth_src_mac[0],
-			pkth.eth->eth_src_mac[1],
-			pkth.eth->eth_src_mac[2],
-			pkth.eth->eth_src_mac[3],
-			pkth.eth->eth_src_mac[4],
-			pkth.eth->eth_src_mac[5]);
-
-		strDst.Format(_T("%02X:%02X:%02X:%02X:%02X:%02X"),
-			pkth.eth->eth_dst_mac[0],
-			pkth.eth->eth_dst_mac[1],
-			pkth.eth->eth_dst_mac[2],
-			pkth.eth->eth_dst_mac[3],
-			pkth.eth->eth_dst_mac[4],
-			pkth.eth->eth_dst_mac[5]);
-
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 2, LVIF_TEXT, strSrc, NULL, NULL, NULL, NULL);
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 3, LVIF_TEXT, strDst, NULL, NULL, NULL, NULL);
-		break;
-
-	case IPV4_TCP:
-	case IPV4_UDP:
-	case IPV4_TCP_ICMP:
-		strSrc.Format(_T("%0d.%0d.%0d.%0d"),
-			pkth.ip4h->ip4_src_ip[0],
-			pkth.ip4h->ip4_src_ip[1],
-			pkth.ip4h->ip4_src_ip[2],
-			pkth.ip4h->ip4_src_ip[3]);
-
-		strDst.Format(_T("%0d.%0d.%0d.%0d"),
-			pkth.ip4h->ip4_dst_ip[0],
-			pkth.ip4h->ip4_dst_ip[1],
-			pkth.ip4h->ip4_dst_ip[2],
-			pkth.ip4h->ip4_dst_ip[3]);
-
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 2, LVIF_TEXT, strSrc, NULL, NULL, NULL, NULL);
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 3, LVIF_TEXT, strDst, NULL, NULL, NULL, NULL);
-		break;
-
-	case IPV6_TCP:
-	case IPV6_UDP:
-	case IPV6_TCP_ICMP:
-		strSrc.Format(_T("%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x"),
-			ntohs(pkth.ip6h->ip6_src_ip[0]),
-			ntohs(pkth.ip6h->ip6_src_ip[1]),
-			ntohs(pkth.ip6h->ip6_src_ip[2]),
-			ntohs(pkth.ip6h->ip6_src_ip[3]),
-			ntohs(pkth.ip6h->ip6_src_ip[4]),
-			ntohs(pkth.ip6h->ip6_src_ip[5]),
-			ntohs(pkth.ip6h->ip6_src_ip[6]),
-			ntohs(pkth.ip6h->ip6_src_ip[7]));
-
-		strDst.Format(_T("%04x:%04x:%04x:%04x:%04x:%04x:%04x:%04x"),
-			ntohs(pkth.ip6h->ip6_dst_ip[0]),
-			ntohs(pkth.ip6h->ip6_dst_ip[1]),
-			ntohs(pkth.ip6h->ip6_dst_ip[2]),
-			ntohs(pkth.ip6h->ip6_dst_ip[3]),
-			ntohs(pkth.ip6h->ip6_dst_ip[4]),
-			ntohs(pkth.ip6h->ip6_dst_ip[5]),
-			ntohs(pkth.ip6h->ip6_dst_ip[6]),
-			ntohs(pkth.ip6h->ip6_dst_ip[7]));
-
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 2, LVIF_TEXT, strSrc, NULL, NULL, NULL, NULL);
-		TThis->m_ctrlListLogText.SetItem(TThis->m_index, 3, LVIF_TEXT, strDst, NULL, NULL, NULL, NULL);
-		break;
-	}
-
-	switch (pkth.type) // TODO: 정보 출력
-	{
-	case ARP:
-
-		break;
-	case IPV4_TCP:
-
-		break;
-	case IPV4_UDP:
-
-		break;
-	case IPV4_TCP_ICMP:
-
-		break;
-	case IPV6_TCP:
-
-		break;
-	case IPV6_UDP:
-
-		break;
-	case IPV6_TCP_ICMP:
-
-		break;
-	}
+	TThis->m_ctrlListLogText.SetItem(TThis->m_index, 1, LVIF_TEXT, strProtocol, NULL, NULL, NULL, NULL);
+	TThis->m_ctrlListLogText.SetItem(TThis->m_index, 2, LVIF_TEXT, strSrc, NULL, NULL, NULL, NULL);
+	TThis->m_ctrlListLogText.SetItem(TThis->m_index, 3, LVIF_TEXT, strDst, NULL, NULL, NULL, NULL);
+	TThis->m_ctrlListLogText.SetItem(TThis->m_index, 4, LVIF_TEXT, strInfo, NULL, NULL, NULL, NULL);
 
 	TThis->m_index++;
-
 	while (TThis->m_ThreadStatus == THREAD_PAUSE);
 }
 
