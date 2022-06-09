@@ -14,6 +14,7 @@
 #define IDD_DIALOG_FIREWALL             136
 #define IDI_ICON1                       139
 #define IDI_ICON_PANDIS                 139
+#define IDD_DIALOG_STATISTIC            140
 #define IDC_EDIT_DISPLAY                1000
 #define IDC_BUTTON_START                1001
 #define IDC_BUTTON_STOP                 1002
@@ -21,6 +22,7 @@
 #define IDC_LIST1                       1004
 #define IDC_LIST_RULE_LIST              1004
 #define IDC_LIST_LOGTEXT                1004
+#define IDC_LIST_STATISTIC              1004
 #define IDC_EDIT_SELECT_TRANSPARENC     1005
 #define IDC_SPIN1                       1006
 #define IDC_SPIN_RULE_LIST_CHANGE_NUMBER 1006
@@ -48,7 +50,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        140
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1025
 #define _APS_NEXT_SYMED_VALUE           101
