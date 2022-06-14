@@ -73,6 +73,7 @@ BEGIN_MESSAGE_MAP(CDialogPandisNIDS, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_START, &CDialogPandisNIDS::OnBnClickedButtonStart)
 	ON_BN_CLICKED(IDC_BUTTON_STOP, &CDialogPandisNIDS::OnBnClickedButtonStop)
 	ON_BN_CLICKED(IDC_BUTTON_PAUSE, &CDialogPandisNIDS::OnBnClickedButtonPause)
+	ON_BN_CLICKED(IDC_BUTTON_OPEN_STATISTIC, &CDialogPandisNIDS::OnBnClickedButtonOpenStatistic)
 END_MESSAGE_MAP()
 
 
@@ -87,6 +88,9 @@ BOOL CDialogPandisNIDS::OnInitDialog()
 	m_ctrlListLogText.InsertColumn(2, _T("출발지"), LVCFMT_LEFT, 120);
 	m_ctrlListLogText.InsertColumn(3, _T("도착지"), LVCFMT_LEFT, 120);
 	m_ctrlListLogText.InsertColumn(4, _T("정보"), LVCFMT_LEFT, 380);
+
+	m_DlgStat = new CDialogStatistic(&m_PktCount);
+	m_DlgStat->Create(IDD_DIALOG_STATISTIC);
 
 	m_ctrlStaticStateText.SetWindowText(_T("상태: 중지"));
 
@@ -186,10 +190,12 @@ void CDialogPandisNIDS::OnBnClickedButtonStart()
 
 	if (m_DlgPcapFile->DoModal() == IDCANCEL)
 		return;
-	strSavePath = m_DlgPcapFile->GetPathName();
+	m_strSavePath = m_DlgPcapFile->GetPathName();
 
 	m_ctrlListLogText.DeleteAllItems();
 	m_index = 0;
+
+	memset(&m_PktCount, 0, sizeof(m_PktCount));
 
 	m_ThreadStatus = THREAD_RUNNING;
 	m_pThread = AfxBeginThread(CaptureThreadFunc, (LPVOID)this);
@@ -229,7 +235,7 @@ UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 		bIsError = true;
 	}
 
-	if (!bIsError && ((PThis->m_dumpfile = pcap_dump_open(PThis->m_hPcap, (CStringA)PThis->strSavePath)) == NULL))
+	if (!bIsError && ((PThis->m_dumpfile = pcap_dump_open(PThis->m_hPcap, (CStringA)PThis->m_strSavePath)) == NULL))
 	{
 		AfxMessageBox(_T("저장 경로를 열 수 없습니다."));
 		bIsError = true;
@@ -246,7 +252,7 @@ UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 		return -1;
 	}
 
-	pcap_loop(PThis->m_hPcap, 0, packet_handler, (u_char*)PThis);
+	pcap_loop(PThis->m_hPcap, 0, packet_handler, (u_char*)lpParam);
 
 	pcap_close(PThis->m_hPcap);
 	pcap_freecode(&PThis->m_fcode);
@@ -267,7 +273,7 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 	CString strResult, strIndex, strSrc, strDst, strInfo;
 	strIndex.Format(_T("%u"), TThis->m_index + 1);
 
-	hdr_t pkth = PacketAnalyzing(pkt_data);
+	hdr_t pkth = PacketAnalyzing(pkt_data, TThis->m_PktCount);
 
 	TThis->m_ctrlListLogText.InsertItem(TThis->m_index, strIndex);
 
@@ -421,4 +427,10 @@ void CDialogPandisNIDS::OnBnClickedButtonPause()
 		m_ctrlStaticStateText.SetWindowText(_T("상태: 일시정지"));
 		return;
 	}
+}
+
+void CDialogPandisNIDS::OnBnClickedButtonOpenStatistic()
+{
+	m_DlgStat->ShowWindow(SW_SHOW);
+	m_DlgStat->ResumeRefreshThread();
 }

@@ -8,13 +8,13 @@ typedef unsigned long long int	bit64_t;
 /*
 *	패킷 타입 매크로
 */
-#define ARP				0
-#define IPV4_TCP		1
-#define IPV4_UDP		2
-#define IPV4_TCP_ICMP	3
-#define IPV6_TCP		4
-#define IPV6_UDP		5
-#define IPV6_TCP_ICMP	6
+#define ARP				1
+#define IPV4_TCP		2
+#define IPV4_UDP		3
+#define IPV4_TCP_ICMP	4
+#define IPV6_TCP		5
+#define IPV6_UDP		6
+#define IPV6_TCP_ICMP	7
 
 /*
 *	이더넷 헤더
@@ -124,16 +124,30 @@ typedef struct udp_headers {
 *   자동 패킷 해석
 */
 
-typedef struct p_headers {
-	const eth_t* eth;
-	const ipv4h_t* ip4h;
-	const ipv6h_t* ip6h;
-	const arph_t* arph;
-	const icmph_t* icmph;
-	const tcph_t* tcph;
-	const udph_t* udph;
+typedef class p_packettype{
+public:
+	p_packettype();
+	UINT eth;
+	UINT ip4;
+	UINT ip6;
+	UINT arp;
+	UINT icmp;
+	UINT tcp;
+	UINT udp;
+}Pt_t;
+
+typedef class p_headers {
+public:
+	p_headers();
+	const eth_t*	eth;
+	const ipv4h_t*	ip4h;
+	const ipv6h_t*	ip6h;
+	const arph_t*	arph;
+	const icmph_t*	icmph;
+	const tcph_t*	tcph;
+	const udph_t*	udph;
 	UINT			type;
 }hdr_t;
 
-hdr_t PacketAnalyzing(const bit8_t* packet_data);
-int PrintPacketData(hdr_t packet_headers, CString& strPrintString);
+hdr_t __out PacketAnalyzing(const bit8_t* __in packet_data, Pt_t& __out packet_count);
+int PrintPacketData(hdr_t __in packet_headers, CString& __out strPrintString);
