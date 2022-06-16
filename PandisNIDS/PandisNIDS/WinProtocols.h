@@ -159,3 +159,7 @@ public:
 hdr_t __out PacketAnalyzing(const bit8_t* __in packet_data, Pt_t& __out packet_count);
 int PrintPacketData(hdr_t __in packet_headers, CString& __out strPrintString);
 int __out FindStringPacketData(const struct pcap_pkthdr* __in header, const bit8_t* __in packet_data, std::vector<CString> __in find_strings);
+int ProtocolAnalyzing(UINT __in type, CString& __out strProtocol);
+int AddressAnalyzing(hdr_t __in packet_headers, CString& __out strSource, CString& __out strDestination);
+int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out strInfomation);
+CString TCPFlagCheck(bit8_t flags);
