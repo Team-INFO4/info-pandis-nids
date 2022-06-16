@@ -17,6 +17,13 @@ typedef unsigned long long int	bit64_t;
 #define IPV6_TCP_ICMP	6
 
 /*
+*  패킷 헤더 길이 (가변 제외)
+*/
+#define ETH_HEADER_LEN 22
+#define IPV6_HEADER_LEN 40
+#define UDP_HEADER_LEN 8
+
+/*
 *	이더넷 헤더
 */
 
@@ -137,4 +144,4 @@ typedef struct p_headers {
 
 hdr_t PacketAnalyzing(const bit8_t* packet_data);
 int PrintPacketData(hdr_t packet_headers, CString& strPrintString);
-int FindStringPacketData(const bit8_t* packet_data, std::vector<CString>find_strings);
+int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString>find_strings);

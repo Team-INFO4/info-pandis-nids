@@ -60,9 +60,19 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data)
 	return headers;
 }
 
-int FindStringPacketData(const bit8_t* packet_data, std::vector<CString>find_strings)
+int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString>find_strings)
 {
-
+	CString packet_string;
+	for (int i = 0; i < header->caplen; ++i) {
+		if (packet_data[i] != '\0') {
+			packet_string.AppendFormat(_T("%c "), packet_data[i]);
+		}
+	}
+	AfxMessageBox(packet_string);
+	for (CString str : find_strings) {
+			return 1;
+	}
+	return 0;
 }
 
 int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : 출력 완성
