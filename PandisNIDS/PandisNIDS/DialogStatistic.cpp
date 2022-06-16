@@ -49,7 +49,8 @@ BOOL CDialogStatistic::OnInitDialog()
 	m_ctrlListStatistic.InsertItem(3, _T("TCP"));
 	m_ctrlListStatistic.InsertItem(4, _T("UDP"));
 	m_ctrlListStatistic.InsertItem(5, _T("ICMP"));
-	for (int i = 0; i < 6; i++)
+	m_ctrlListStatistic.InsertItem(6, _T("String Rule"));
+	for (int i = 0; i < 7; i++)
 		m_ctrlListStatistic.SetItem(i, 1, LVIF_TEXT, _T("0"), NULL, NULL, NULL, NULL);
 
 	m_pThread = AfxBeginThread(RefreshThreadFunc, (LPVOID)this);
@@ -92,6 +93,9 @@ UINT CDialogStatistic::RefreshThreadFunc(LPVOID lpParam)
 
 		strNumber.Format(_T("%u"), PThis->m_pPacketCount->icmp);	// ICMP
 		PThis->m_ctrlListStatistic.SetItem(5, 1, LVIF_TEXT, strNumber, NULL, NULL, NULL, NULL);
+
+		strNumber.Format(_T("%u"), PThis->m_pPacketCount->string);	// ICMP
+		PThis->m_ctrlListStatistic.SetItem(6, 1, LVIF_TEXT, strNumber, NULL, NULL, NULL, NULL);
 
 		Sleep(1000);
 	}

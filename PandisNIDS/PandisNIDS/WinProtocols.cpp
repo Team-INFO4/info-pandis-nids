@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 
 hdr_t PacketAnalyzing(const bit8_t* packet_data, Pt_t &packet_count)
 {
@@ -63,10 +63,10 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data, Pt_t &packet_count)
 	return headers;
 }
 
-int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString>find_strings)
+int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString> find_strings)
 {
 	CString packet_string;
-	for (int i = 0; i < header->len; ++i)
+	for (UINT i = 0; i < header->len; ++i)
 		if (packet_data[i] != '\0')
 			packet_string.AppendFormat(_T("%c"), packet_data[i]);
 
@@ -76,7 +76,7 @@ int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_
 	return 0;
 }
 
-int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : ��� �ϼ�
+int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : 출력 완성
 {
 	strPrintString = "/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-/\r\n";
 
@@ -301,7 +301,7 @@ int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out 
 	{
 	case ARP:
 		if (ntohs(packet_headers.arph->arp_opcode) == 1 || ntohs(packet_headers.arph->arp_opcode) == 3)
-			strInfomation.Format(_T("%0d.%0d.%0d.%0d�� ���� ��ġ? %d.%d.%d.%d���� ���Źٶ�."),
+			strInfomation.Format(_T("%0d.%0d.%0d.%0d를 가진 장치? %d.%d.%d.%d으로 수신바람."),
 				packet_headers.arph->arp_dst_ip[0],
 				packet_headers.arph->arp_dst_ip[1],
 				packet_headers.arph->arp_dst_ip[2],
@@ -311,7 +311,7 @@ int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out 
 				packet_headers.arph->arp_src_ip[2],
 				packet_headers.arph->arp_src_ip[3]);
 		else
-			strInfomation.Format(_T("%02X:%02X:%02X:%02X:%02X:%02X�� %0d.%0d.%0d.%0d�� ������ ����."),
+			strInfomation.Format(_T("%02X:%02X:%02X:%02X:%02X:%02X가 %0d.%0d.%0d.%0d을 가지고 있음."),
 				packet_headers.arph->arp_src_mac[0],
 				packet_headers.arph->arp_src_mac[1],
 				packet_headers.arph->arp_src_mac[2],
@@ -324,7 +324,7 @@ int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out 
 				packet_headers.arph->arp_src_ip[3]);
 		break;
 	case IPV4_TCP:
-		strInfomation.Format(_T("%u -> %u [%s] ������=%u ����=%u ������=%u ����=%u"),
+		strInfomation.Format(_T("%u -> %u [%s] 시퀀스=%u 승인=%u 윈도우=%u 길이=%u"),
 			ntohs(packet_headers.tcph->tcp_src_port),
 			ntohs(packet_headers.tcph->tcp_dst_port),
 			TCPFlagCheck(packet_headers.tcph->tcp_flags),
@@ -333,7 +333,7 @@ int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out 
 			ntohs(packet_headers.tcph->tcp_window),
 			packetlen - 74);
 	case IPV6_TCP:
-		strInfomation.Format(_T("%u -> %u [%s] ������=%u ����=%u ������=%u ����=%u"),
+		strInfomation.Format(_T("%u -> %u [%s] 시퀀스=%u 승인=%u 윈도우=%u 길이=%u"),
 			ntohs(packet_headers.tcph->tcp_src_port),
 			ntohs(packet_headers.tcph->tcp_dst_port),
 			TCPFlagCheck(packet_headers.tcph->tcp_flags),
@@ -344,7 +344,7 @@ int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out 
 		break;
 	case IPV4_UDP:
 	case IPV6_UDP:
-		strInfomation.Format(_T("%u -> %u ����=%u"),
+		strInfomation.Format(_T("%u -> %u 길이=%u"),
 			ntohs(packet_headers.udph->udp_src_port),
 			ntohs(packet_headers.udph->udp_dst_port),
 			ntohs(packet_headers.udph->udp_len)-8);
@@ -352,11 +352,11 @@ int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out 
 	case IPV4_TCP_ICMP:
 	case IPV6_TCP_ICMP:
 		if (packet_headers.icmph->icmp_type == 0)
-			strInfomation.Format(_T("���� ����"));
+			strInfomation.Format(_T("에코 응답"));
 		else if(packet_headers.icmph->icmp_type == 8)
-			strInfomation.Format(_T("���� ��û"));
+			strInfomation.Format(_T("에코 요청"));
 		else if(packet_headers.icmph->icmp_type == 3)
-			strInfomation.Format(_T("������ �� ���� ������"));
+			strInfomation.Format(_T("도달할 수 없는 목적지"));
 		break;
 	}
 	return 0;

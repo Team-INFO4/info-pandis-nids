@@ -87,7 +87,7 @@ BOOL CDialogPandisNIDS::OnInitDialog()
 	m_ctrlListLogText.InsertColumn(1, _T("프로토콜"), LVCFMT_LEFT, 80);
 	m_ctrlListLogText.InsertColumn(2, _T("출발지"), LVCFMT_LEFT, 120);
 	m_ctrlListLogText.InsertColumn(3, _T("도착지"), LVCFMT_LEFT, 120);
-	m_ctrlListLogText.InsertColumn(4, _T("정보"), LVCFMT_LEFT, 380);
+	m_ctrlListLogText.InsertColumn(4, _T("정보"), LVCFMT_LEFT, 550);
 
 	m_DlgStat = new CDialogStatistic(&m_PktCount);
 	m_DlgStat->Create(IDD_DIALOG_STATISTIC);
@@ -270,17 +270,16 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 	CDialogPandisNIDS* TThis = (CDialogPandisNIDS*)param;
 	pcap_dump((u_char*)TThis->m_dumpfile, header, pkt_data);
 	CString strIndex, strProtocol, strSrc, strDst, strInfo;
-	
-	hdr_t pkth = PacketAnalyzing(pkt_data);
+
+	hdr_t pkth = PacketAnalyzing(pkt_data, TThis->m_PktCount);
 
 	strIndex.Format(_T("%u"), TThis->m_index + 1);
 	ProtocolAnalyzing(pkth.type, strProtocol);
 	AddressAnalyzing(pkth, strSrc, strDst);
 	InfoAnalzing(pkth, header->len, strInfo);
 
-	hdr_t pkth = PacketAnalyzing(pkt_data, TThis->m_PktCount);
-	// TODO: 문자열 탐지 추가
-	int stringCheck = FindStringPacketData(header, pkt_data, TThis->m_DlgRuleSet->m_vtAnalyzeDatas); // TODO: 통계 반영
+	TThis->m_PktCount.string += FindStringPacketData(header, pkt_data, TThis->m_DlgRuleSet->m_vtAnalyzeDatas);
+	
 	TThis->m_ctrlListLogText.InsertItem(TThis->m_index, strIndex);
 	TThis->m_ctrlListLogText.SetItem(TThis->m_index, 1, LVIF_TEXT, strProtocol, NULL, NULL, NULL, NULL);
 	TThis->m_ctrlListLogText.SetItem(TThis->m_index, 2, LVIF_TEXT, strSrc, NULL, NULL, NULL, NULL);

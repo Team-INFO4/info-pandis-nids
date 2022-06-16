@@ -196,7 +196,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DialogDeviceSelect.h" />
-    <ClInclude Include="DialogFirewall.h" />
     <ClInclude Include="DialogPandisNIDS.h" />
     <ClInclude Include="DialogRuleSet.h" />
     <ClInclude Include="DialogStatistic.h" />
