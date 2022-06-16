@@ -60,6 +60,19 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data)
 	return headers;
 }
 
+int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString>find_strings)
+{
+	CString packet_string;
+	for (int i = 0; i < header->len; ++i)
+		if (packet_data[i] != '\0')
+			packet_string.AppendFormat(_T("%c"), packet_data[i]);
+
+	for (CString str : find_strings)
+		if (packet_string.Find(str) != -1)
+			return 1;
+	return 0;
+}
+
 int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : 출력 완성
 {
 	strPrintString = "/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-/\r\n";
