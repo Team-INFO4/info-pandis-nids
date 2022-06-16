@@ -3,6 +3,7 @@
 //
 #include "DialogDeviceSelect.h"
 #include "DialogRuleSet.h"
+#include "DialogStatistic.h"
 
 #pragma once
 
@@ -28,6 +29,8 @@ public:
 	CDialogDeviceSelect *m_DlgDevSel;
 	// 패킷 탐지 규칙 지정
 	CDialogRuleSet *m_DlgRuleSet;
+	// 패킷 통계
+	CDialogStatistic *m_DlgStat;
 	// 패킷 파일 저장 위치 컨트롤
 	CFileDialog* m_DlgPcapFile;
 	// 패킷 로그 출력 리스트 컨트롤
@@ -48,7 +51,9 @@ public:
 	// 패킷 덤프 파일
 	pcap_dumper_t* m_dumpfile;
 	// 패킷 파일 저장 위치
-	CString strSavePath;
+	CString m_strSavePath;
+	// 프로토콜 타입별 카운트
+	Pt_t m_PktCount;
 public:
 	// 캡처 스레드 함수
 	static UINT CaptureThreadFunc(LPVOID lpParam);
@@ -68,6 +73,7 @@ public:
 	afx_msg void OnBnClickedButtonStart();
 	afx_msg void OnBnClickedButtonStop();
 	afx_msg void OnBnClickedButtonPause();
+	afx_msg void OnBnClickedButtonOpenStatistic();
 protected:
 	HICON m_hIcon;
 

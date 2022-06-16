@@ -1,58 +1,61 @@
 #include "pch.h"
 
-hdr_t PacketAnalyzing(const bit8_t* packet_data)
+hdr_t PacketAnalyzing(const bit8_t* packet_data, Pt_t &packet_count)
 {
 	hdr_t headers;
 	headers.eth = (eth_t*)packet_data;
-	headers.ip4h = NULL;
-	headers.ip6h = NULL;
-	headers.arph = NULL;
-	headers.icmph = NULL;
-	headers.tcph = NULL;
-	headers.udph = NULL;
 
 	switch (ntohs(headers.eth->eth_type))
 	{
 	case 0x0800:
 		headers.ip4h = (ipv4h_t*)(packet_data + sizeof(eth_t));
+		packet_count.ip4++;
 		switch (headers.ip4h->ip4_protocol)
 		{
 		case 6:		// TCP
 			headers.tcph = (tcph_t*)(packet_data + sizeof(eth_t) + headers.ip4h->ip4_hdr_len * 4);
 			headers.type = IPV4_TCP;
+			packet_count.tcp++;
 			break;
 		case 17:	// UDP
 			headers.udph = (udph_t*)(packet_data + sizeof(eth_t) + headers.ip4h->ip4_hdr_len * 4);
 			headers.type = IPV4_UDP;
+			packet_count.udp++;
 			break;
 		case 1:		// ICMP
 			headers.icmph = (icmph_t*)(packet_data + sizeof(eth_t) + headers.ip4h->ip4_hdr_len * 4);
 			headers.type = IPV4_TCP_ICMP;
+			packet_count.icmp++;
 			break;
 		}
 		break;
 
 	case 0x86DD:
 		headers.ip6h = (ipv6h_t*)(packet_data + sizeof(eth_t));
+		packet_count.ip6++;
 		switch (headers.ip6h->ip6_next)
 		{
 		case 6:		// TCP
 			headers.tcph = (tcph_t*)(packet_data + sizeof(eth_t) + sizeof(ipv6h_t));
 			headers.type = IPV6_TCP;
+			packet_count.tcp++;
 			break;
 		case 17:	// UDP
 			headers.udph = (udph_t*)(packet_data + sizeof(eth_t) + sizeof(ipv6h_t));
 			headers.type = IPV6_UDP;
+			packet_count.udp++;
 			break;
 		case 58:	// ICMPv6
 			headers.icmph = (icmph_t*)(packet_data + sizeof(eth_t) + sizeof(ipv6h_t));
 			headers.type = IPV6_TCP_ICMP;
+			packet_count.icmp++;
 			break;
 		}
 		break;
 
 	case 0x0806:
 		headers.arph = (arph_t*)(packet_data + sizeof(eth_t));
+		packet_count.arp++;
 		headers.type = ARP;
 		break;
 	}
@@ -194,3 +197,11 @@ int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : √‚∑
 	strPrintString += "/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-/\r\n\r\n";
 	return 0;
 }
+
+p_packettype::p_packettype()
+	: eth(0), ip4(0), ip6(0), arp(0), icmp(0), tcp(0), udp(0)
+{}
+
+p_headers::p_headers()
+	: eth(nullptr), ip4h(nullptr), ip6h(nullptr), arph(nullptr), icmph(nullptr), tcph(nullptr), udph(nullptr), type(NULL)
+{}

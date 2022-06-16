@@ -6,107 +6,107 @@ typedef unsigned int			bit32_t;
 typedef unsigned long long int	bit64_t;
 
 /*
-*	ÆÐÅ¶ Å¸ÀÔ ¸ÅÅ©·Î
+*	ï¿½ï¿½Å¶ Å¸ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½
 */
-#define ARP				0
-#define IPV4_TCP		1
-#define IPV4_UDP		2
-#define IPV4_TCP_ICMP	3
-#define IPV6_TCP		4
-#define IPV6_UDP		5
-#define IPV6_TCP_ICMP	6
+#define ARP				1
+#define IPV4_TCP		2
+#define IPV4_UDP		3
+#define IPV4_TCP_ICMP	4
+#define IPV6_TCP		5
+#define IPV6_UDP		6
+#define IPV6_TCP_ICMP	7
 
 /*
-*  ÆÐÅ¶ Çì´õ ±æÀÌ (°¡º¯ Á¦¿Ü)
+*  ï¿½ï¿½Å¶ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 */
 #define ETH_HEADER_LEN 22
 #define IPV6_HEADER_LEN 40
 #define UDP_HEADER_LEN 8
 
 /*
-*	ÀÌ´õ³Ý Çì´õ
+*	ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 */
 
 #define ETH_ADDR_LEN	6
 #define ETH_HDR_LEN		14
 
 typedef struct ethernet_headers {
-	bit8_t	eth_dst_mac[ETH_ADDR_LEN];	// µµÂøÁö MAC
-	bit8_t	eth_src_mac[ETH_ADDR_LEN];	// Ãâ¹ßÁö MAC
-	bit16_t eth_type;					// ÆÐÅ¶ Å¸ÀÔ 
+	bit8_t	eth_dst_mac[ETH_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MAC
+	bit8_t	eth_src_mac[ETH_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ MAC
+	bit16_t eth_type;					// ï¿½ï¿½Å¶ Å¸ï¿½ï¿½ 
 }eth_t;
 
 /*
-*	IP Çì´õ
+*	IP ï¿½ï¿½ï¿½
 */
 
 #define IP4_ADDR_LEN	4
 #define IP6_ADDR_LEN	8
 
 typedef struct ipv4_headers {
-	bit8_t	ip4_hdr_len : 4;			// Çì´õ ±æÀÌ
-	bit8_t	ip4_ver : 4;				// ¹öÀü
-	bit8_t	ip4_tos;					// ¼­ºñ½º Å¸ÀÔ
-	bit16_t ip4_tot_len;				// ÀüÃ¼ ±æÀÌ
-	bit16_t ip4_id;						// È®ÀÎ ¼ýÀÚ
-	bit16_t ip4_frag_off;				// ÇÃ·¡±×, ºÐÇÒ ¿ÀÇÁ¼Â
-	bit8_t	ip4_ttl;					// »ýÁ¸ ½Ã°£
-	bit8_t	ip4_protocol;				// ÇÁ·ÎÅäÄÝ Å¸ÀÔ
-	bit16_t ip4_checksum;				// Ã¼Å©¼¶
-	bit8_t	ip4_src_ip[IP4_ADDR_LEN];	// Ãâ¹ßÁö ip
-	bit8_t	ip4_dst_ip[IP4_ADDR_LEN];	// µµÂøÁö ip
+	bit8_t	ip4_hdr_len : 4;			// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	bit8_t	ip4_ver : 4;				// ï¿½ï¿½ï¿½ï¿½
+	bit8_t	ip4_tos;					// ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+	bit16_t ip4_tot_len;				// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+	bit16_t ip4_id;						// È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	bit16_t ip4_frag_off;				// ï¿½Ã·ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	bit8_t	ip4_ttl;					// ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+	bit8_t	ip4_protocol;				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+	bit16_t ip4_checksum;				// Ã¼Å©ï¿½ï¿½
+	bit8_t	ip4_src_ip[IP4_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ ip
+	bit8_t	ip4_dst_ip[IP4_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ip
 }ipv4h_t;
 
 typedef struct ipv6_headers {
-	bit32_t ip6_flow;					// 4 bits ¹öÀü, 8 bits Æ®·¡ÇÈ Å¬·¡½º, 20 bits ÇÃ·Î¿ì ¶óº§
-	bit16_t ip6_pay_len;				// ÆäÀÌ·Îµå ±æÀÌ
-	bit8_t	ip6_next;					// ´ÙÀ½ Çì´õ
-	bit8_t	ip6_hop_limit;				// ipv6 È© ÇÑ°è(»ýÁ¸ ½Ã°£)
-	bit16_t	ip6_src_ip[IP6_ADDR_LEN];	// Ãâ¹ßÁö ipv6
-	bit16_t	ip6_dst_ip[IP6_ADDR_LEN];	// µµÂøÁö ipv6
+	bit32_t ip6_flow;					// 4 bits ï¿½ï¿½ï¿½ï¿½, 8 bits Æ®ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½, 20 bits ï¿½Ã·Î¿ï¿½ ï¿½ï¿½
+	bit16_t ip6_pay_len;				// ï¿½ï¿½ï¿½Ì·Îµï¿½ ï¿½ï¿½ï¿½ï¿½
+	bit8_t	ip6_next;					// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	bit8_t	ip6_hop_limit;				// ipv6 È© ï¿½Ñ°ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½)
+	bit16_t	ip6_src_ip[IP6_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ ipv6
+	bit16_t	ip6_dst_ip[IP6_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ipv6
 }ipv6h_t;
 
 /*
-*	ARP Çì´õ
+*	ARP ï¿½ï¿½ï¿½
 */
 
 #define ARP_MAC_LEN		6
 #define ARP_ADDR_LEN	4
 
 typedef struct arp_headers {
-	bit16_t arp_hard_type;				// ÇÏµå¿þ¾î Å¸ÀÔ
-	bit16_t arp_protocol;				// ÇÁ·ÎÅäÄÝ
-	bit8_t	arp_addr_len;				// MAC ÁÖ¼Ò ±æÀÌ
-	bit8_t	arp_protocol_len;			// ÇÁ·ÎÅäÄÝ ±æÀÌ
-	bit16_t arp_opcode;					// ¸í·ÉÄÚµå
-	bit8_t	arp_src_mac[ARP_MAC_LEN];	// Ãâ¹ßÁö MAC
-	bit8_t	arp_src_ip[ARP_ADDR_LEN];	// Ãâ¹ßÁö IP
-	bit8_t	arp_dst_mac[ARP_MAC_LEN];	// µµÂøÁö MAC
-	bit8_t	arp_dst_ip[ARP_ADDR_LEN];	// µµÂøÁö IP
+	bit16_t arp_hard_type;				// ï¿½Ïµï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+	bit16_t arp_protocol;				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	bit8_t	arp_addr_len;				// MAC ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+	bit8_t	arp_protocol_len;			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	bit16_t arp_opcode;					// ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½
+	bit8_t	arp_src_mac[ARP_MAC_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ MAC
+	bit8_t	arp_src_ip[ARP_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ IP
+	bit8_t	arp_dst_mac[ARP_MAC_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MAC
+	bit8_t	arp_dst_ip[ARP_ADDR_LEN];	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IP
 }arph_t;
 
 /*
-*	ICMP Çì´õ
+*	ICMP ï¿½ï¿½ï¿½
 */
 
 typedef struct icmp_headers {
-	bit8_t	icmp_type;		// ICMP Å¸ÀÔ
-	bit8_t	icmp_code;		// ÄÚµå
-	bit16_t icmp_checksum;	// Ã¼Å©¼¶
+	bit8_t	icmp_type;		// ICMP Å¸ï¿½ï¿½
+	bit8_t	icmp_code;		// ï¿½Úµï¿½
+	bit16_t icmp_checksum;	// Ã¼Å©ï¿½ï¿½
 }icmph_t;
 
 /*
-*	TCP, UDP Çì´õ
+*	TCP, UDP ï¿½ï¿½ï¿½
 */
 
 typedef struct tcp_headers {
-	bit16_t tcp_src_port;	// Ãâ¹ßÁö Æ÷Æ®
-	bit16_t tcp_dst_port;	// µµÂøÁö Æ÷Æ®
-	bit32_t tcp_seq;		// ¼ø¼­
-	bit32_t tcp_seq_ack;	// ½ÂÀÎ
-	bit8_t	tcp_rsvd : 4;	// ¿¹¾à
-	bit8_t	tcp_hlen : 4;	// Çì´õ ±æÀÌ
-	bit8_t	tcp_flags;		// ÇÃ·¡±×
+	bit16_t tcp_src_port;	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+	bit16_t tcp_dst_port;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+	bit32_t tcp_seq;		// ï¿½ï¿½ï¿½ï¿½
+	bit32_t tcp_seq_ack;	// ï¿½ï¿½ï¿½ï¿½
+	bit8_t	tcp_rsvd : 4;	// ï¿½ï¿½ï¿½ï¿½
+	bit8_t	tcp_hlen : 4;	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	bit8_t	tcp_flags;		// ï¿½Ã·ï¿½ï¿½ï¿½
 #define TCP_FIN		0X01
 #define TCP_SYN		0x02
 #define TCP_RST		0x04
@@ -115,33 +115,47 @@ typedef struct tcp_headers {
 #define TCP_URG		0x20
 #define TCP_ECE		0x40
 #define TCP_CWR		0x80
-	bit16_t tcp_window;		// À©µµ¿ì »çÀÌÁî
-	bit16_t tcp_checksum;	// Ã¼Å©¼¶
-	bit16_t tcp_urgptr;		// ±ä±ÞÆ÷ÀÎÅÍ
+	bit16_t tcp_window;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	bit16_t tcp_checksum;	// Ã¼Å©ï¿½ï¿½
+	bit16_t tcp_urgptr;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }tcph_t;
 
 typedef struct udp_headers {
-	bit16_t udp_src_port;	// Ãâ¹ßÁö Æ÷Æ®
-	bit16_t udp_dst_port;	// µµÂøÁö Æ÷Æ®
-	bit16_t udp_len;		// ±æÀÌ
-	bit16_t udp_checksum;	// UDP Ã¼Å©¼¶
+	bit16_t udp_src_port;	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+	bit16_t udp_dst_port;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+	bit16_t udp_len;		// ï¿½ï¿½ï¿½ï¿½
+	bit16_t udp_checksum;	// UDP Ã¼Å©ï¿½ï¿½
 }udph_t;
 
 /*
-*   ÀÚµ¿ ÆÐÅ¶ ÇØ¼®
+*   ï¿½Úµï¿½ ï¿½ï¿½Å¶ ï¿½Ø¼ï¿½
 */
 
-typedef struct p_headers {
-	const eth_t* eth;
-	const ipv4h_t* ip4h;
-	const ipv6h_t* ip6h;
-	const arph_t* arph;
-	const icmph_t* icmph;
-	const tcph_t* tcph;
-	const udph_t* udph;
+typedef class p_packettype{
+public:
+	p_packettype();
+	UINT eth;
+	UINT ip4;
+	UINT ip6;
+	UINT arp;
+	UINT icmp;
+	UINT tcp;
+	UINT udp;
+}Pt_t;
+
+typedef class p_headers {
+public:
+	p_headers();
+	const eth_t*	eth;
+	const ipv4h_t*	ip4h;
+	const ipv6h_t*	ip6h;
+	const arph_t*	arph;
+	const icmph_t*	icmph;
+	const tcph_t*	tcph;
+	const udph_t*	udph;
 	UINT			type;
 }hdr_t;
 
-hdr_t PacketAnalyzing(const bit8_t* packet_data);
-int PrintPacketData(hdr_t packet_headers, CString& strPrintString);
-int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString>find_strings);
+hdr_t __out PacketAnalyzing(const bit8_t* __in packet_data, Pt_t& __out packet_count);
+int PrintPacketData(hdr_t __in packet_headers, CString& __out strPrintString);
+int __out FindStringPacketData(const struct pcap_pkthdr* __in header, const bit8_t* __in packet_data, std::vector<CString> __in find_strings);
