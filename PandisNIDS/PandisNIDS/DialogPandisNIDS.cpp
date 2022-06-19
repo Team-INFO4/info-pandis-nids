@@ -197,16 +197,16 @@ void CDialogPandisNIDS::OnBnClickedButtonStart()
 
 	memset(&m_PktCount, 0, sizeof(m_PktCount));
 
-	m_ThreadStatus = THREAD_RUNNING;
 	m_pThread = AfxBeginThread(CaptureThreadFunc, (LPVOID)this);
 	if (m_pThread == NULL)
 	{
-		AfxMessageBox(_T("시작하지 못했습니다."));
+		AfxMessageBox(_T("캡처 스레드를 초기화하지 못했습니다."));
 		m_ThreadStatus = THREAD_STOP;
-		m_ctrlStaticStateText.SetWindowText(_T("상태: 중지"));
+		m_ctrlStaticStateText.SetWindowText(_T("상태: 중지(시작하지 못함)"));
 		return;
 	}
 
+	m_ThreadStatus = THREAD_RUNNING;
 	m_ctrlStaticStateText.SetWindowText(_T("상태: 동작중."));
 }
 
@@ -237,7 +237,7 @@ UINT CDialogPandisNIDS::CaptureThreadFunc(LPVOID lpParam)
 
 	if (!bIsError && ((PThis->m_dumpfile = pcap_dump_open(PThis->m_hPcap, (CStringA)PThis->m_strSavePath)) == NULL))
 	{
-		AfxMessageBox(_T("저장 경로를 열 수 없습니다."));
+		AfxMessageBox(_T("파일 저장 경로를 열 수 없습니다."));
 		bIsError = true;
 	}
 

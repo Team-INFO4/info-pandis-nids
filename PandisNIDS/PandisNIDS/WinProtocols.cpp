@@ -71,12 +71,15 @@ int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_
 			packet_string.AppendFormat(_T("%c"), packet_data[i]);
 
 	for (CString str : find_strings)
+	{
+		if (str == _T(""))	continue;
 		if (packet_string.Find(str) != -1)
 			return 1;
+	}
 	return 0;
 }
 
-int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // TODO : 출력 완성
+int PrintPacketData(hdr_t packet_headers, CString& strPrintString)
 {
 	strPrintString = "/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-/\r\n";
 
