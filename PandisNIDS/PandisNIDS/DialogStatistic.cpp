@@ -11,7 +11,7 @@
 
 IMPLEMENT_DYNAMIC(CDialogStatistic, CDialog)
 
-CDialogStatistic::CDialogStatistic(Pt_t* pPacketCountAddr, CWnd* pParent /*=nullptr*/)
+CDialogStatistic::CDialogStatistic(Pt_t* pPacketCountAddr, CWnd* pParent /*=nullptr*/) // 초기화
 	: CDialog(IDD_DIALOG_STATISTIC, pParent),
 	m_pPacketCount(pPacketCountAddr),
 	m_pThread(nullptr)
@@ -22,14 +22,14 @@ CDialogStatistic::~CDialogStatistic()
 {
 }
 
-void CDialogStatistic::DoDataExchange(CDataExchange* pDX)
+void CDialogStatistic::DoDataExchange(CDataExchange* pDX) // 화면과 데이터 교환
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_STATISTIC, m_ctrlListStatistic);
 }
 
 
-BEGIN_MESSAGE_MAP(CDialogStatistic, CDialog)
+BEGIN_MESSAGE_MAP(CDialogStatistic, CDialog) // 이벤트와 함수를 연동
 	ON_BN_CLICKED(IDCANCEL, &CDialogStatistic::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
@@ -37,10 +37,11 @@ END_MESSAGE_MAP()
 // CDialogStatistic 메시지 처리기
 
 
-BOOL CDialogStatistic::OnInitDialog()
+BOOL CDialogStatistic::OnInitDialog() // 추가 초기화
 {
 	CDialog::OnInitDialog();
 
+	/* 창 생성 시 내용 추가 */
 	m_ctrlListStatistic.InsertColumn(0, _T("프로토콜"), LVCFMT_LEFT, 100);
 	m_ctrlListStatistic.InsertColumn(1, _T("개수"), LVCFMT_LEFT, 380);
 	m_ctrlListStatistic.InsertItem(0, _T("ARP"));
@@ -60,7 +61,7 @@ BOOL CDialogStatistic::OnInitDialog()
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
-void CDialogStatistic::OnBnClickedCancel()
+void CDialogStatistic::OnBnClickedCancel() // 창을 닫을 때 창 표시를 숨김
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	ShowWindow(SW_HIDE);
@@ -69,7 +70,7 @@ void CDialogStatistic::OnBnClickedCancel()
 	//CDialog::OnCancel();
 }
 
-UINT CDialogStatistic::RefreshThreadFunc(LPVOID lpParam)
+UINT CDialogStatistic::RefreshThreadFunc(LPVOID lpParam) // 내용을 포인터 변수로 계속 갱신하는 스레드
 {
 	CDialogStatistic* PThis = (CDialogStatistic*)lpParam;
 	CString strNumber;
@@ -97,19 +98,19 @@ UINT CDialogStatistic::RefreshThreadFunc(LPVOID lpParam)
 		strNumber.Format(_T("%u"), PThis->m_pPacketCount->string);	// ICMP
 		PThis->m_ctrlListStatistic.SetItem(6, 1, LVIF_TEXT, strNumber, NULL, NULL, NULL, NULL);
 
-		Sleep(1000);
+		Sleep(1000); // 1초마다 갱신
 	}
 
 	return 0;
 }
 
-UINT CDialogStatistic::ResumeRefreshThread()
+UINT CDialogStatistic::ResumeRefreshThread() // 스레드 재개
 {
 	if(m_pThread)
 		return m_pThread->ResumeThread();
 }
 
-void CDialogStatistic::SuspendRefreshThread()
+void CDialogStatistic::SuspendRefreshThread() // 스레드 정지
 {
 	if(m_pThread)
 		m_pThread->SuspendThread();

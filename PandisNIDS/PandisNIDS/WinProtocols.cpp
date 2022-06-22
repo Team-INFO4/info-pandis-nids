@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 
-hdr_t PacketAnalyzing(const bit8_t* packet_data, Pt_t &packet_count)
+hdr_t PacketAnalyzing(const bit8_t* packet_data, Pt_t &packet_count) // 패킷 분석
 {
 	hdr_t headers;
 	headers.eth = (eth_t*)packet_data;
@@ -63,7 +63,7 @@ hdr_t PacketAnalyzing(const bit8_t* packet_data, Pt_t &packet_count)
 	return headers;
 }
 
-int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString> find_strings)
+int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_data, std::vector<CString> find_strings) // 패킷에서 감지할 문자열 처리 함수 
 {
 	CString packet_string;
 	for (UINT i = 0; i < header->len; ++i)
@@ -79,7 +79,7 @@ int FindStringPacketData(const struct pcap_pkthdr* header, const bit8_t* packet_
 	return 0;
 }
 
-int PrintPacketData(hdr_t packet_headers, CString& strPrintString)
+int PrintPacketData(hdr_t packet_headers, CString& strPrintString) // 현재 사용하지 않는 함수
 {
 	strPrintString = "/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-/\r\n";
 
@@ -201,7 +201,7 @@ int PrintPacketData(hdr_t packet_headers, CString& strPrintString)
 	return 0;
 }
 
-int ProtocolAnalyzing(UINT type, CString& strProtocol)
+int ProtocolAnalyzing(UINT type, CString& strProtocol) // 프로토콜 분석 후 문자열로 반환
 {
 	switch (type)
 	{
@@ -231,7 +231,7 @@ int ProtocolAnalyzing(UINT type, CString& strProtocol)
 	return 0;
 }
 
-int AddressAnalyzing(hdr_t __in packet_headers, CString& __out strSource, CString& __out strDestination)
+int AddressAnalyzing(hdr_t __in packet_headers, CString& __out strSource, CString& __out strDestination) // 주소 파싱 후 문자열로 반환
 {
 	switch (packet_headers.type)
 	{
@@ -296,7 +296,7 @@ int AddressAnalyzing(hdr_t __in packet_headers, CString& __out strSource, CStrin
 	return 0;
 }
 
-int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out strInfomation)
+int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out strInfomation) // 패킷 정보 분석 후 정보 문자열 반환
 {
 	CString strFlags;
 
@@ -365,7 +365,7 @@ int InfoAnalzing(hdr_t __in packet_headers, UINT __in packetlen, CString& __out 
 	return 0;
 }
 
-CString TCPFlagCheck(bit8_t flags)
+CString TCPFlagCheck(bit8_t flags) // TCP 플래그 분석 후 문자열로 반환
 {
 	CString strFlags;
 
@@ -396,10 +396,10 @@ CString TCPFlagCheck(bit8_t flags)
 	return strFlags;
 }
 
-p_packettype::p_packettype()
+p_packettype::p_packettype() // 클래스 초기화 관련
 	: eth(0), ip4(0), ip6(0), arp(0), icmp(0), tcp(0), udp(0)
 {}
 
-p_headers::p_headers()
+p_headers::p_headers() // 클래스 초기화 관련
 	: eth(nullptr), ip4h(nullptr), ip6h(nullptr), arph(nullptr), icmph(nullptr), tcph(nullptr), udph(nullptr), type(NULL)
 {}
