@@ -1,0 +1,5 @@
+만약 'FireBat NIDS'를 컴파일할 경우 최신 버전의 Npcap SDK를 C:\에 존재해야 합니다.
+압축을 풀어 나온 SDK 폴더를 'npcap-sdk'로 이름을 변경하여 C:\에 위치하십시오.
+그리고 npcap dll를 설치하기 위해 최신 버전의 Npcap Installer를 하십시오.
+
+- Npcap SDK : https://npcap.com/dist/npcap-sdk-1.12.zip
