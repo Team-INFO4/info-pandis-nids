@@ -271,6 +271,9 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 {
 	CDialogPandisNIDS* TThis = (CDialogPandisNIDS*)param; // this 클래스
 
+	if (TThis->m_ThreadStatus == THREAD_PAUSE) // 일시정지
+		TThis->m_pThread->SuspendThread();
+
 	pcap_dump((u_char*)TThis->m_dumpfile, header, pkt_data); // 받은 패킷을 파일에 저장
 	CString strIndex, strProtocol, strSrc, strDst, strInfo; // 각 출력란 문자열
 
@@ -293,8 +296,6 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 
 	TThis->m_index++; // 순서 추가
 	TThis->m_ctrlListLogText.EnsureVisible(TThis->m_ctrlListLogText.GetItemCount() - 1, FALSE); // 스크롤를 아래로 내림
-
-	while (TThis->m_ThreadStatus == THREAD_PAUSE); // 일시정지
 }
 
 void CDialogPandisNIDS::OnBnClickedButtonStop() // 정지 버튼
@@ -311,6 +312,7 @@ void CDialogPandisNIDS::OnBnClickedButtonPause() // 일시 정지 버튼
 {
 	if (m_ThreadStatus == THREAD_PAUSE)
 	{
+		m_pThread->ResumeThread();
 		m_ThreadStatus = THREAD_RUNNING;
 		m_ctrlStaticStateText.SetWindowText(_T("상태: 동작중."));
 		return;
