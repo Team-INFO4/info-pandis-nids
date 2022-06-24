@@ -292,6 +292,8 @@ void CDialogPandisNIDS::packet_handler(u_char* param, const struct pcap_pkthdr* 
 	TThis->m_ctrlListLogText.SetItem(TThis->m_index, 4, LVIF_TEXT, strInfo, NULL, NULL, NULL, NULL);
 
 	TThis->m_index++; // 순서 추가
+	TThis->m_ctrlListLogText.EnsureVisible(TThis->m_ctrlListLogText.GetItemCount() - 1, FALSE); // 스크롤를 아래로 내림
+
 	while (TThis->m_ThreadStatus == THREAD_PAUSE); // 일시정지
 }
 
